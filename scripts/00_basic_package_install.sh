@@ -4,4 +4,6 @@ sudo apt install -y \
     htop \
     vim \
     lm-sensors \
-    git
+    git \
+    net-tools \
+    curl
