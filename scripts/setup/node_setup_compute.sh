@@ -5,7 +5,7 @@ while true; do
   case $1 in
     -h|--host) HOST=${2}; shift 2;;
     -i|--static-ip) STATIC_IP=${2}; shift 2;;
-    -d|--dns) DNS=${2}; shift 2;;
+    -d|--dns) DNS=${2}; shift 2;;  # Should be something like 192.168.1.1
     --) shift; break;;
     *) break;;
   esac
