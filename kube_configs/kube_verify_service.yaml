@@ -9,7 +9,7 @@ metadata:
   name: kube-verify
   namespace: kube-verify
 spec:
-  type: LoadBalancer # Default is CluserIP (only avail w/in cluster). See https://gardener.cloud/documentation/guides/applications/service-access/
+  type: NodePort # Default is CluserIP (only avail w/in cluster). Ingress looks better since we can specify domain/ specific routing/ etc. See https://gardener.cloud/documentation/guides/applications/service-access/
   selector:
     app: kube-verify
   ports:
