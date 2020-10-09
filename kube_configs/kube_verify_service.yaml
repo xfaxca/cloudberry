@@ -1,0 +1,17 @@
+# Adds a service for the kube-verify deployment to expose the nginx pods (apps). In this case, it's just
+# The empty nginx welcome page since it's not serving any app and is just a test to make sure everything is set up 
+# correctly.
+#
+# This listens on port 80 and redirects to 8080 on the pods. 
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-verify
+  namespace: kube-verify
+spec:
+  selector:
+    app: kube-verify
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
