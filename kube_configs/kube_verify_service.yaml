@@ -9,6 +9,7 @@ metadata:
   name: kube-verify
   namespace: kube-verify
 spec:
+  type: LoadBalancer # Default is CluserIP (only avail w/in cluster). See https://gardener.cloud/documentation/guides/applications/service-access/
   selector:
     app: kube-verify
   ports:
