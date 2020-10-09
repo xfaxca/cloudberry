@@ -26,6 +26,7 @@ sudo sh ./00_basic_package_install.sh
 printf "\n==>Package install done! Configuring static IP, Hostname and DNS\n"
 sudo sh ./01_hostname_and_ip.sh ${HOST} ${STATIC_IP} ${DNS}
 
+# TODO: the kubeadm shouldn't be installed until after all the other stuff is done. Add in cgroups/iptables mods here.
 printf "\n==> Host name, ip and dns configured. Installing kubeadm...\n"
 sudo sh ./03_install_kubeadm.sh
 
