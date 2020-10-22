@@ -6,4 +6,6 @@ sudo apt install -y \
     lm-sensors \
     git \
     net-tools \
-    curl
+    curl \
+    qemu-user-static \
+    binfmt-support
