@@ -38,6 +38,6 @@ Instructions can be found at https://kubernetes.io/docs/tasks/access-application
     NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE   SELECTOR
     dashboard-metrics-scraper   ClusterIP   xx.xx.xxx.xx    <none>        8000/TCP        72m   k8s-app=dashboard-metrics-scraper
     kubernetes-dashboard        NodePort    xx.xx.xx.xxx   <none>        443:32113/TCP   72m   k8s-app=kubernetes-dashboard
-    ```bash
+    ```
 
 7. Access the dashboard via the nodeport and use the token from step 3 to log in.
