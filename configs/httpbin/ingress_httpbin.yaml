@@ -10,8 +10,8 @@ spec:
   rules:
   - http:
       paths:
-        - path: /httpbin
-          pathType: Prefix
+        - path: /httpbin, /cookies, /html, /get
+          pathType: Exact
           backend:
             service:
               name: httpbin
