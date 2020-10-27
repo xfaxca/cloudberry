@@ -19,9 +19,9 @@ Instructions can be found at https://kubernetes.io/docs/tasks/access-application
     - See `cloudberry/scripts/ssl/create_self_signed_cert.sh`
     - Link: https://github.com/kubernetes/dashboard/blob/master/docs/user/certificate-management.md
 
-5. Create kubernetes secret and edit deployment to use the generated certificates (here, assuming `tls.crt`/`tls.key` in $HOME/certs
-    - kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs -n kubernetes-dashboard
-    - kubectl -n kubernetes-dashboard edit deployment kubernetes-dashboard
+5. Create kubernetes secret and edit deployment to use the generated certificates (here, assuming `tls.crt`/`tls.key` in $HOME/certs)
+    - `kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs -n kubernetes-dashboard`
+    - `kubectl -n kubernetes-dashboard edit deployment kubernetes-dashboard`
     - In the yaml config that displays after the above command, add tls arguments to the pod definitions:
     ```yaml
     containers:
