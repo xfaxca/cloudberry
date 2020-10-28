@@ -21,7 +21,7 @@ spec:
       secretName: kubernetes-dashboard-certs
   rules:
   - host: cloudberry.dashboard
-  - http:
+    http:
       paths:
         - path: /
           pathType: Prefix
