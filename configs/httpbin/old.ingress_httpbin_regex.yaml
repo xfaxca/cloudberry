@@ -5,22 +5,22 @@ metadata:
   namespace: default
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/use-regex: "true"
     #nginx.ingress.kubernetes.io/app-root: /httpbin
     #nginx.ingress.kubernetes.io/rewrite-target: /$1  # TODO: Doc this. This was what was needed to make the path routing work properlya
-    #nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     #nginx.ingress.kubernetes.io/rewrite-target: /
-    #ingress.kubernetes.io/rewrite-target: /
+    #nginx.ingress.kubernetes.io/rewrite-target: /
+    #ingress.kubernetes.io/rewrite-target: 
 spec:
   rules:
-  - host: jordgubbe-k8s-master
-    http:
+  - http:
       paths:
-        - path: /
+        - path: /httpbin(/|$)(.*)
+          #- path: /httpbin
           pathType: Prefix
           backend:
             service:
               name: httpbin
               port:
                 number: 8000
-
