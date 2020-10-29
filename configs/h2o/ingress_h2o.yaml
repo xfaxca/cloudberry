@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: h2o-ingress
+  namespace: h2o-cluster
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: cloudberry.h2o  # Note, this hostname must resolve via DNS or your /etc/hosts to a node in the cluster. 
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: h2o-service
+              port:
+                number: 54321
+
+

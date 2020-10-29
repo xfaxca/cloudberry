@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: h2o-cluster
+  labels:
+    name: h2o-cluster
