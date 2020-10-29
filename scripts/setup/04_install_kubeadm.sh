@@ -5,10 +5,6 @@ if [[ -z "${user}" ]]; then
     user=pi
 fi
 
-# Install Docker
-curl -sSL get.docker.com | sh && \
-sudo usermod ${user} -aG docker
-
 # Disable Swap
 sudo dphys-swapfile swapoff && \
 sudo dphys-swapfile uninstall && \
