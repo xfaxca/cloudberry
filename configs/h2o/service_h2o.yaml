@@ -13,4 +13,4 @@ spec:
     app: h2o-k8s  # Must match the deployment name. 
   ports:
   - protocol: TCP
-    port: 54321  # Default H2O port. 
+    port: 54321  # Default H2O port.
