@@ -1,0 +1,2 @@
+FROM h2oai/h2o-open-source-k8s
+LABEL maintainer="cloudberry"
