@@ -1,0 +1,16 @@
+# H2O Pods deployed on Kubernetes cluster require a headless service for H2O Node discovery. 
+# The headless service, instead of load-balancing incoming requests to the underlying H2O pods, 
+# returns a set of addresses of all the underlying pods. This enables H2O to cluster itself.
+apiVersion: v1
+kind: Service
+metadata:
+  name: h2o-service
+  namespace: h2o-cluster
+spec:
+  type: ClusterIP  # Defines the service as headless.
+  clusterIP: None
+  selector:
+    app: h2o-k8s  # Must match the deployment name. 
+  ports:
+  - protocol: TCP
+    port: 54321  # Default H2O port.

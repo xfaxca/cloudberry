@@ -1,0 +1,102 @@
+# Adaptaed from https://www.h2o.ai/blog/running-h2o-cluster-on-a-kubernetes-cluster/. Healthcheck API does not seem to be working, at least with
+# The version of h2o here. Commented that out and things seem to be working ok. Might want to get that working if using this for any significant work.
+
+# 1. Namespace
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: h2o-cluster
+  labels:
+    name: h2o-cluster
+
+# 2. Service
+# H2O Pods deployed on Kubernetes cluster require a headless service for H2O Node discovery. 
+# The headless service, instead of load-balancing incoming requests to the underlying H2O pods, 
+# returns a set of addresses of all the underlying pods. This enables H2O to cluster itself.
+apiVersion: v1
+kind: Service
+metadata:
+  name: h2o-service
+  namespace: h2o-cluster
+spec:
+  type: ClusterIP  # Defines the service as headless.
+  clusterIP: None
+  selector:
+    app: h2o-k8s  # Must match the deployment name. 
+  ports:
+  - protocol: TCP
+    port: 54321  # Default H2O port.
+
+# 3. Deployment (as StatefulSet)
+# It is strongly recommended to run H2O as a Stateful set on a Kubernetes cluster. Kubernetes assumes 
+# all the pods inside the cluster are stateful and does not attempt to restart the individual pods on 
+# failure. Once a job is triggered on an H2O cluster, the cluster is locked and no additional nodes can 
+# be added. Therefore, the cluster has to be restarted as a whole if required – which is a perfect fit 
+# for a StatefulSet.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: h2o-stateful-set
+  namespace: h2o-cluster
+spec:
+  serviceName: h2o-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: h2o-k8s  # Should match service name. 
+  template:
+    metadata:
+      labels:
+        app: h2o-k8s
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: h2o-k8s
+          image: cloudberry/h2o-arm64
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "1Gi" # Control allocated mem. 
+          ports:
+            - containerPort: 54321
+              protocol: TCP
+              #readinessProbe:
+              #httpGet:
+              #path: /kubernetes/isLeaderNode
+              #port: 8080
+              #initialDelaySeconds: 5
+              #periodSeconds: 5
+              #failureThreshold: 1
+          env:
+          - name: H2O_KUBERNETES_SERVICE_DNS
+            value: h2o-service.h2o-statefulset.svc.cluster.local
+          - name: H2O_NODE_LOOKUP_TIMEOUT
+            value: '180'
+          - name: H2O_NODE_EXPECTED_COUNT
+            value: '3'
+          - name: H2O_KUBERNETES_API_PORT
+            value: '8080'
+
+# 4. Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: h2o-ingress
+  namespace: h2o-cluster
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: cloudberry.h2o  # Note, this hostname must resolve via DNS or your /etc/hosts to a node in the cluster. 
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: h2o-service
+              port:
+                number: 54321
+
+

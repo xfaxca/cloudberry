@@ -1,0 +1,2 @@
+FROM citizenstig/httpbin:latest
+LABEL maintainer="xfaxca"
