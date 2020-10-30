@@ -128,7 +128,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: elasticsearch
+  name: es-cluster
   namespace: elk
   labels:
     k8s-app: elasticsearch
