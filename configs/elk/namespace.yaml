@@ -1,0 +1,9 @@
+# Namespace
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: elk
+  labels:
+    name: elk
+---
+
