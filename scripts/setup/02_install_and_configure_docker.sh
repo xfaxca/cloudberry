@@ -1,8 +1,11 @@
 #!/bin/bash
+# Installs docker and configures docker groups, daemon and system cgroups.
+# Note: you most likely will need to run this with root privileges.
+
 user=$1  # User to add to the docker group
 if [ -z "${user}" ]; then
     echo "User not set. Defaulting to pi"
-    user=cron
+    user=pi
 fi
 
 # 1. Install Docker
