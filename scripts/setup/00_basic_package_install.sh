@@ -8,4 +8,5 @@ sudo apt install -y \
     net-tools \
     curl \
     qemu-user-static \
-    binfmt-support
+    binfmt-support \
+    sshpass
