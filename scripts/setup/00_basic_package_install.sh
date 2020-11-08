@@ -10,4 +10,5 @@ sudo apt install -y \
     qemu-user-static \
     binfmt-support \
     sshpass \
-    nfs-kernel-server
+    nfs-kernel-server \
+    nfs-common
